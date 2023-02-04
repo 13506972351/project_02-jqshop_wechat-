@@ -1,0 +1,110 @@
+<view class="frame">
+  <!--轮播图-->
+  <swiper indicator-dots circular  class="swiperstyle">   
+    <!-- indicator-dots 圆点 circular最后一张衔接 autoplay="true"自动播放-->
+    <swiper-item  wx:for="{{transition_filename}}" wx:key="index">
+      <image src="{{item}}" mode="aspectFit " class="swiperimg"></image>
+      <!-- mode="aspectFill 等比例缩放 -->
+    </swiper-item>
+  </swiper>
+  <!-- 商品描述及价格 -->
+  <view class="details">
+    <View class="price_all">
+      <label for="" class="icons">￥</label>
+      <text class="price">{{details.price}}</text>
+    </View>
+    <view class="describe_all">
+      <text class="describe">{{details.describe}}</text>
+    </view>
+  </view>
+  <!-- 颜色尺码发货信息 -->
+  <view class="choice">
+    <view class="choice_color">
+      <view class="choice_frame">
+        <label for="" class="choice_label">选择</label>
+        <label for="" class="color_label">颜色/尺码分类</label>
+        <label class="choice_iconss">>></label>
+      </view>
+      <view class="color_frame">
+        <view class="color_img" >
+          <block wx:for="{{transition_filename}}" wx:key="index">
+            <image src="{{item}}" class="color_imgs"></image>
+          </block>
+        </view>
+        <view class="color_count_label_frame">
+          <label for="" class="color_count_label">共{{transition_filename.length}}种颜色可选</label>
+        </view>
+        
+      </view>
+    </view>
+    <view class="post_frame">
+      <label for="" class="post_lable">发货</label>
+      <view class="post_details">
+        <label for="">发货地址：{{}}</label>
+        <label for="">快递：</label>
+        <label for="">免运费</label>
+        <label for="">月销</label>
+        <label for="">a{{}}</label>
+      </view>
+      
+    </view>
+    <view class="parameter_frame">
+      <label for="" class="parameter_label">参数</label>
+      <label for="" class="parameter_content">品牌尺码...</label>
+      <label for="" class="parameter_iconss">>></label>
+    </view>
+    
+  </view>
+  <view class="evaluate_frame">
+    <view class="title">
+      <label for="">评价({{}})</label><!--评价个数渲染-->
+      <label for="" class="see_all">查看全部评价</label>
+    </view>
+    <view class="evaluate_content">
+      <block wx:for="{{}}">    <!--评价数据渲染-->
+        <view class="head_img">
+            <image></image>
+          </view>
+          <view class="user_name">
+            <label for="" class="username"></label>
+            <label for="" class="evaluate_date"></label>
+          </view>
+      </block> 
+    </view>
+  </view>
+  <view class="detailed_frame">
+    <view class="detailed_title">商品详情介绍</view>
+    <view class="commodity_img">
+      <block wx:for="{{transition_filename}}" wx:key="index">
+        <image src="{{item}}"></image>
+      </block>
+    </view>
+  </view> 
+  <!-- 底部 -->
+  <view class="bottom_tab">
+    <view class="shop_home" bindtap="geto_home">
+      <image src="/image/icon/home.png" class="icon_img"></image>
+      <label for="" class="bottom_labela">店铺</label>
+    </view>
+    <view class="customer_service">
+      <image src="/image/icon/server.png" class="icon_img"></image>
+      <label for="" class="bottom_labela">客服</label>
+    </view>
+    <view class="shop_car" bindtap="geto_shop">
+      <image src="/image/icon/shopcar.png" class="icon_img"></image>
+      <view class="circular"><label for=""  class="shopcar_count">{{3}}</label></view>
+      <label for="" class="bottom_labela">购物车</label>
+    </view>
+    <view class="shop_frame">
+      <view class="jion_shopcar">
+        <label for="" class="bottom_labelb">加入购物车</label>
+      </view>
+      <view class="Buy_now">
+        <label for="" class="bottom_labelb">立即购买</label>
+      </view>
+    </view>
+    
+  </view>
+
+</view>
+  

@@ -1,0 +1,253 @@
+/* pages/details/details.wxss */
+.frame{
+  background-color: #eee7e7;
+}
+.swiperstyle{
+  border: 1rpx solid #9d9d9d;
+  border-radius: 4rpx;
+  margin: 1rpx;
+  height: 500rpx;
+  width: 740rpx;
+}
+.swiperimg{
+  height: 500rpx;
+  width: 736rpx;
+  padding: 1rpx;
+  border: 1rpx solid #BB5E00;
+}
+
+.details{
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(253, 252, 252);
+  margin:6rpx 6rpx 20rpx 6rpx;
+  border-radius: 20rpx;
+}
+.price_all{
+  color: red;
+  margin-left: 10rpx;
+  padding: 15rpx;
+}
+.price{
+  font-size: 50rpx;
+  margin: 5rpx;
+  font-weight: 800;
+}
+.describe_all{
+  margin: 5rpx;
+  padding: 15rpx;
+}
+.describe{
+  font-size: 35rpx;
+  margin-left: 10rpx;
+  font-weight: 600;
+}
+.choice{
+  border-radius:15rpx ;
+  background-color: white;
+  margin:6rpx 6rpx 20rpx 6rpx;
+  display: flex;
+  flex-direction: column;
+}
+.choice_color{
+  padding: 15rpx;
+}
+.choice_label{
+  color: #9d9d9d;
+}
+.color_label{
+  margin-left: 40rpx;
+
+}
+.choice_iconss{
+  /* padding-left:350rpx ; */
+  color:#9d9d9d;
+  position: absolute;
+  right: 5rpx;
+}
+.color_frame{
+  display: flex;
+  flex-direction: row;
+  /* position: absolute;
+  left: 120rpx; */
+  margin: 10rpx 0rpx 15rpx 100rpx;
+
+}
+.color_img{
+  overflow:hidden;
+  width:300rpx;
+  height: 70rpx;
+}
+.color_imgs{
+  width: 30px;
+  height: 30px;
+  margin: 5rpx;
+  border-radius: 5rpx;
+}
+.color_count_label_frame{
+  margin-left: 20rpx;
+  background-color: #eee7e7;
+  border-radius: 10rpx;
+  text-align: center;
+  height: 70rpx;
+  
+}
+.color_count_label{
+  color:#9d9d9d ;
+  font-size: 30rpx;
+  line-height: 70rpx;
+  padding: 0 10rpx 0 10rpx;
+}
+.post_frame{
+  padding: 15rpx;
+  display: flex;
+  flex-direction: row;
+} 
+.post_details{
+  margin-left: 40rpx;
+}
+.post_lable{
+  color: #9d9d9d;
+}
+
+.parameter_frame{
+  padding: 15rpx;
+  display: flex;
+  flex-direction: row;
+}
+.parameter_label{
+  color: #9d9d9d;
+}
+.parameter_content{
+  padding-left: 40rpx;
+}
+.parameter_iconss{
+  position: absolute;
+  right: 5rpx;
+  /* padding-left:380rpx ; */
+  color:#9d9d9d;
+}
+.evaluate_frame{
+  border-radius:15rpx ;
+  background-color: white;
+  margin:6rpx 6rpx 20rpx 6rpx;
+}
+.title{
+  padding: 15rpx;
+  display: flex;
+  justify-content: space-between;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.see_all{
+  font-size: 20rpx;
+  color: #da4409;
+}
+.detailed_frame{
+  border-radius:15rpx ;
+  background-color: white;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 100rpx;
+  /* margin:6rpx 6rpx 20rpx 6rpx; */
+}
+.detailed_title{
+  margin: 15rpx 0 15rpx 0;
+  font-size: 30rpx;
+  padding: 30rpx 0 10rpx 0;
+}
+.commodity_img{
+  width: 100%;
+}
+.bottom_tab{
+  width: 100%;
+  /* height: 100rpx; */
+  position: fixed;
+  bottom: 0;
+  padding: 15rpx;
+  background-color:white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.shop_home{
+  width: 30px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  line-height: 40rpx;
+  padding-top: 10rpx;
+}
+.customer_service{
+  width: 30px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  line-height: 40rpx;
+  padding-top: 10rpx;
+}
+.shop_car{
+  width: 30px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  line-height: 40rpx;
+  padding-top: 10rpx;
+}
+.circular{
+  width: 10px;
+  height: 10px;
+  border-radius: 50rpx;
+  /* border: 1rpx solid red; */
+  position: fixed;
+  left: 285rpx;
+  bottom:  80rpx;
+  background-color: red;
+  /* display: none; */
+  line-height: 5rpx;
+  text-align: center;
+}
+.shopcar_count{
+  font-size: 15rpx;
+  
+  color:white;
+  font-weight: 900;
+}
+.icon_img{
+  width: 20px;
+  height: 20px;
+}
+.bottom_labela{
+  font-size: 20rpx;
+  color: #a19d9d;
+
+}
+.bottom_labelb{
+   line-height: 30rpx; 
+   text-align: center;
+   font-size: 25rpx;
+}
+.shop_frame{
+  display: flex;
+  flex-direction: row;
+}
+.jion_shopcar{
+  width: 80px;
+  height: 30px;
+  margin: 15rpx;
+  background-color: #dd710c;
+  border-radius: 50rpx;
+  color: white;
+  text-align: center;
+  line-height: 50rpx;
+}
+.Buy_now{
+  width: 80px;
+  height: 30px;
+  margin: 15rpx;
+  background-color: #f32e0b;
+  border-radius: 50rpx;
+  color: white;
+  text-align: center;
+  line-height: 50rpx;
+}

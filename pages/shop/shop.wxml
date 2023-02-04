@@ -1,0 +1,47 @@
+<view class="shop_frame">
+  <view class="head_frame">
+    <view>
+      <label for="" class="text">购物车</label>
+      <label for="" class="count">({{3}})</label>
+    </view>
+    <view class="address_frame">
+      <image src="/image/icon/location.png" mode="" class="icon_img"></image>
+      <label for="" class="address_text">{{299999999999999999988}}</label>
+      <label for="" class="icon_arrow">></label>
+    </view>
+    <view class="Administration_frame">
+      <label for="" class="Administration_texg" >管理</label>
+    </view>
+  </view>
+  <view class="content_frame">
+    <block>
+      <view class="choice_frame">
+        
+      </view>
+      <view class="img_frame">
+        
+      </view>
+      <view class="content_frame">
+        
+      </view>
+    </block>
+  </view>
+  <view class="button_frame">
+    <view class="button_choice_frame">
+      <checkbox class="check_total" value=""/>
+    </view>
+    <view class="count_text1">
+      <label for="" class="all_text">全选</label>
+    </view>
+    <view class="count_text2">
+      <label for="">合计：</label>
+      <label for="" class="money_icon">￥</label>
+      <label for="" class="money">{{3.00}}</label>
+    </view>
+    <view class="button">
+      <view class="settlement_button">去结算</view>
+    </view>
+  </view>
+</view>
+
+

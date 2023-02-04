@@ -1,0 +1,80 @@
+<!--pages/home/home.wxml-->
+<swiper indicator-dots circular autoplay="true" class="swiperstyle">   
+  <!-- indicator-dots 圆点 circular最后一张衔接 autoplay="true"自动播放-->
+  <swiper-item  wx:for="{{imglist}}" wx:key="index">
+    <image src="{{item}}" mode="aspectFit " class="swiperimg"></image>
+    <!-- mode="aspectFill 等比例缩放 -->
+  </swiper-item>
+</swiper>
+<view class="tex1">美好的童年</view>
+
+<!-- 侧边导航栏 -->
+<view class="subject">
+  <!-- 大分类 -->
+  <view class="leftnavigation">
+    <view class="clas" bindtap="clickfashclas" >
+      <label for=""   > 服装分类</label>
+    </view>
+  
+    <view class="clas"  bindtap="shoeclickclas">
+      <label for="" > 鞋子分类</label> 
+    </view>
+
+    <view class="clas"  bindtap="coordclickclas">
+      <label for="" > 配件分类</label> 
+    </view>
+  </view>
+  <!-- 具体分类 -->
+  <view class="specific">
+   
+    <!-- 渲染服装明细列表 -->
+    <view class="fashion" hidden= "{{fash_pows}}"  >
+      <block wx:for="{{fashlist}}"  wx:key="index">
+        <view data-pows="fash_pows" data-name="{{index}}" bindtouchstart="changcolor" class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
+          <label  for="" class="lab" > {{item}}</label>
+        </view> 
+      </block>
+    </view>
+     <!-- 渲染鞋子明细列表 -->
+    <view class="shoes" hidden= "{{shoes_pows}}"  >
+      <block wx:for="{{shoelist}}"  wx:key="index">
+        <view data-pows="shoes_pows" data-name="{{index}}" bindtouchstart="changcolor" class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
+          <label  for="" class="lab" > {{item}}</label>
+        </view> 
+      </block>
+    </view>
+    <!-- 渲染配件明细列表 -->
+    <view class="coord" hidden= "{{coord_pows}}"  >
+      <block wx:for="{{ coordlist}}"  wx:key="index" >
+        <view data-pows="coord_pows"  bindtouchstart="changcolor" data-name="{{index}}"  class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
+          <label  for="" class="lab" > {{item}}</label>
+        </view> 
+      </block>
+    </view>
+  </view>
+</view>
+<!-- 中央视觉区渲染 -->
+<view class="central_vision">
+  <block wx:for="{{transition_filename}}" wx:key="index">
+    <View class="unit" data-name="{{item.img_url}}" bindtap="click_details">
+      <View class="img_frame">
+        <image src="{{item.img_url}}" mode="aspectFit" class="central_img"></image>
+      </View>
+      <View class="information">
+        <label for="" class="describe">{{item.describe}}</label>
+        <label for="" class="price" >￥{{item.price}}</label>
+      </View>
+    </View>
+   
+      
+  </block>
+</view>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+{
+  "pages":[
+    "pages/home/home",
+    "pages/shop/shop",
+    "pages/my/my",
+    "pages/details/details"
+ 
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#000079",
+    "navigationBarTitleText": "剑桥微商城",
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "color":"#7b7b7b",
+    "selectedColor": "#ff0000",
+    "backgroundColor": "#d0d0d0", 
+    "borderStyle": "black", 
+
+    "list": [
+    {
+      "pagePath": "pages/home/home",
+      "text": "商城",
+      "iconPath": "/image/icon/商城.png",
+      "selectedIconPath": "/image/icon/商城2.png"
+      
+    },
+    {"pagePath": "pages/shop/shop",
+      "text": "购物车",
+      "iconPath": "/image/icon/购物车 (1).png",
+      "selectedIconPath": "/image/icon/购物车.png"
+    },
+    {"pagePath": "pages/my/my",
+      "text": "我的",
+      "iconPath": "/image/icon/我的 (1).png",
+      "selectedIconPath": "/image/icon/我的.png"
+    }
+  ]
+    },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

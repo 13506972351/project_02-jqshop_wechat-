@@ -1,0 +1,103 @@
+.shop_frame{
+  background-color: rgb(238, 232, 232);
+}
+.head_frame{
+  display: flex;
+  flex-direction: row;
+  padding: 10rpx 20rpx 10rpx 20rpx;
+  height: 80rpx;
+}
+
+.text{
+  font-size: 40rpx;
+  line-height: 70rpx;
+}
+.count{
+  font-size: 30rpx;
+  line-height: 70rpx;
+}
+.address_frame{
+  width: 460rpx;
+  padding: 10rpx 0rpx 10rpx 10rpx;
+  height: 80rpx;
+}
+.icon_img{
+  height: 40rpx;
+  width: 40rpx;
+  line-height: 30rpx;
+  position: relative;
+  bottom: -7rpx;
+}
+.address_text{
+  line-height: 60rpx;
+  font-size: 30rpx;
+  color: rgb(148, 149, 150);
+}
+.icon_arrow{
+  color: rgb(148, 149, 150);
+}
+.Administration_frame{
+  padding: 10rpx 0rpx 10rpx 10rpx;
+  height: 80rpx;
+}
+.Administration_texg{
+  line-height: 60rpx;
+}
+
+
+
+.button_frame{
+  display: flex;
+  flex-direction: row;
+  height: 100rpx;
+  width: 100%;
+  border-top: 1rpx solid #ebe9e9;
+  /* background-color:#e4e2e2; */
+  position: fixed;
+  bottom: 0rpx;
+}
+.button_choice_frame{
+  line-height: 45rpx;
+  padding: 20rpx 5rpx 20rpx 20rpx;
+}
+checkbox .wx-checkbox-input{
+  border-radius: 50%;
+  /* line-height: 40rpx; */
+  border: 1rpx solid #b8b5b5;
+  width: 20px;
+  height: 20px;
+}
+.count_text1{
+  line-height: 45rpx;
+  padding: 20rpx 0 20rpx 0;
+  
+}
+/* .all_text{
+  color: #504e4e;
+} */
+.count_text2{
+  line-height: 45rpx;
+  padding: 20rpx 0 20rpx 125rpx;
+}
+.money_icon{
+  font-size: 20rpx;
+  color: orangered;
+}
+.money{
+  font-size: 35rpx;
+  color: orangered;
+}
+.button{
+  line-height: 45rpx;
+  padding: 10rpx 20rpx 20rpx 125rpx;
+}
+.settlement_button{
+  width: 100px;
+  height: 80rpx;
+  background-color: orangered;
+  border-radius: 50rpx;
+  text-align: center;
+  color: white;
+  font-size: 35rpx;
+  line-height: 82rpx;
+}
