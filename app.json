@@ -40,5 +40,10 @@
     },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {      
+      "desc": "小程序将要获取当前定位，用于推送最近的店铺服务"
+    }
+  }
 }

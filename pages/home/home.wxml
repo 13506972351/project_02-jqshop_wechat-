@@ -1,7 +1,7 @@
 <!--pages/home/home.wxml-->
 <swiper indicator-dots circular autoplay="true" class="swiperstyle">   
   <!-- indicator-dots 圆点 circular最后一张衔接 autoplay="true"自动播放-->
-  <swiper-item  wx:for="{{imglist}}" wx:key="index">
+  <swiper-item  wx:for="{{swiper_imgurl_list}}" wx:key="index">
     <image src="{{item}}" mode="aspectFit " class="swiperimg"></image>
     <!-- mode="aspectFill 等比例缩放 -->
   </swiper-item>
