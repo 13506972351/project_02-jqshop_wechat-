@@ -1,5 +1,9 @@
 
 var app = getApp()   //在页面中使用全局变量，要先声明
+//导入request接口
+import {request} from "../../promise_api/request" 
+import {getlocation} from "../../promise_api/getlocation"
+
 var QQMapWX=require('../../config_location/qqmap-wx-jssdk.min');  //引入位置服务
 var qqmapsdk=new QQMapWX({
   key:"TRFBZ-YPJLD-ELM4R-P7BOK-JVPKZ-JSFCI"   //运用key
@@ -12,6 +16,10 @@ Page({
     user_lon:0,    //用户经度
     lately_shop_name:'' , //最近店铺名
     shop_add:'',
+
+    shop_name_str:'',   //外省店铺名
+    lai_number:0,    //外省店铺纬度
+    lng_number:0,    //外省店铺经度
 
 
 
@@ -45,127 +53,149 @@ Page({
     vwid:''  ,     //label背景色控制
     transition_filename:[],  //过渡参数传用于存储Central_vision_get函数返回的图片url列表,格式：[{img_url:'',describe:'',price:''}]
     details_urlstr:'',
-
   },
   //发起网络数据请求获取轮播图url数组
   load_load_swiper_img(){
-    const server_ip=app.globalData.server_ip
-    wx.request({
-      url: server_ip+'load_swiper_img',                 //服务器地址
-      method:'get',
-      success:(res)=>{
-        this.setData({
-          swiper_imgurl_list:res.data 
-        })
-      }
+    request({                  //调用封装的request接口
+      url:'load_swiper_img',   //接口地址
+      method:'post'
+    })
+    .then(res=>{
+      this.setData({
+        swiper_imgurl_list:res.data 
+      })
     })
   },
   //打开程序获得当前位置,查找距离最近店铺
   load_current_position(){
     var _this=this  //这是因为this作用域指向问题 ，success函数实际是一个闭包 ， 无法直接通过this来setData
     var _this2=this
-    const server_ip=app.globalData.server_ip
-    wx.getLocation({
-      type:'wgs84',
-      success (res){
-        const latitude_str=res.latitude //纬度
-        const longitude_str=res.longitude  //经度
-
-        //根据经纬度获取用用户地址
-        qqmapsdk.reverseGeocoder({
-          location:{
-            latitude:latitude_str,
-            longitude:longitude_str,
-          },
-          success:function(res){
-            var province=res.result.address_component.province;
-            var city=res.result.address_component.city;
-            var district=res.result.address_component.district;
-            var street=res.result.address_component.street;
-            var street_number=res.result.address_component.street_number;
-            // console.log(province,city,district,street,street_number)
-            //将用户地址传送到后台处理
-            wx.request({
-              url: server_ip+'calc_lately_location',
-              method:'post',
-              data:{
-                provinces:JSON.stringify(province),  //将数据格式转为JSON
-                citys:JSON.stringify(city),
-                districts:JSON.stringify(district),
-                streets:JSON.stringify(street),
-                street_numbers:JSON.stringify(street_number),
-                latitude_strs:latitude_str,
-                longitude_strs:longitude_str
-
-              },
-              header: {
-                'content-type': 'application/x-www-form-urlencoded'  //请求头类型
-                },
-              success:(res)=>{
-                var  ress=res.data
-                // console.log(ress)  //返回离用户最近的店铺
-                // console.log(typeof ress==='string');
-                if(typeof ress==='string'){   //如果是本省找到匹配最近店铺，返回的为string类型，否则为objet
-                  _this.setData({
-                    lately_shop_name:ress
-                  })
-                }else{
-                  // console.log(ress.length)
-                  //分别获取后台传来的地址的经纬度，并返回后台
-                  var lai_long_list={}  //定义字典，用于存储经纬度
-                  for(var i=0;i<=ress.length-1;i++){
-                    // console.log('ress[i]:',ress[i])
-                    var res1=_this2.select_shop_location(ress[i])
-                    console.log('res1:',res1)
-                  }
-                }
-              }
-            })
-            // wx.openLocation({    //根据经纬度打开地图
-            //   latitude: latitude_str,
-            //   longitude: longitude_str,
-            //   address: 'address',
-            //   name: 'name',
-            //   scale: 0,
-            //   success: (res) => {},
-            //   fail: (res) => {},
-            //   complete: (res) => {},
-            // })
-          }
-        })
-      }
-
+    var _this3=this
+    var user_lai_str=0
+    var user_lng_str=0
+    getlocation({                  //调用封装的getlocation接口,得到当前的经纬度
     })
+    .then(([a,b])=>{
+        // console.log(a,b) //当返回值是多个时出要用数组来接收
+        user_lai_str=a
+        user_lng_str=b
+        if(a&&b){        //当返回值到达后，对执行将经纬度转为地址的方法
+          console.log(a,b)
+          qqmapsdk.reverseGeocoder({      //根据经纬度获取用用户地址
+            location:{
+              latitude:user_lai_str,
+              longitude:user_lng_str
+            },
+            success:function(res){
+              // console.log(res)
+              var province=res.result.address_component.province;
+              var city=res.result.address_component.city;
+              var district=res.result.address_component.district;
+              var street=res.result.address_component.street;
+              var street_number=res.result.address_component.street_number;
+              console.log(province,city,district,street,street_number)
+            }
+          })
+        }
+    })
+    
+        
+    //         //将用户地址传送到后台处理
+    //         wx.request({
+    //           url: server_ip+'calc_lately_location',
+    //           method:'post',
+    //           data:{
+    //             provinces:JSON.stringify(province),  //将数据格式转为JSON
+    //             citys:JSON.stringify(city),
+    //             districts:JSON.stringify(district),
+    //             streets:JSON.stringify(street),
+    //             street_numbers:JSON.stringify(street_number),
+    //             latitude_strs:latitude_str,
+    //             longitude_strs:longitude_str
+
+    //           },
+    //           header: {
+    //             'content-type': 'application/x-www-form-urlencoded'  //请求头类型
+    //             },
+    //           success:(res)=>{
+    //             var  ress=res.data
+    //             // console.log(ress)  //返回离用户最近的店铺
+    //             // console.log(typeof ress==='string');
+    //             if(typeof ress==='string'){   //如果是本省找到匹配最近店铺，返回的为string类型，否则为objet
+    //               _this.setData({
+    //                 lately_shop_name:ress
+    //               })
+    //             }else{
+    //               // console.log(ress.length)
+    //               //分别获取后台传来的地址的经纬度，并返回后台
+    //               var lai_lng_list=[]  //定义列表，用于存储单个店经纬度
+    //               let lai_lng_str=[]
+    //               for(var i=0;i<=ress.length-1;i++){
+    //                 var name_str=''
+    //                 var lainumber=0
+    //                 var lngnumber=0
+    //                 let res1=_this2.select_shop_location(ress[i])   //pormise取数方法
+    //                 let a=res1.then((res)=>{
+    //                   lainumber=res[0]
+    //                   lngnumber=res[1]
+    //                 })
+    //                 name_str=ress[i]
+    //                 console.log(name_str,lainumber,lngnumber)
+
+    //               }
+                  
+    //             }
+                
+    //           }
+    //         })
+    //         // wx.openLocation({    //根据经纬度打开地图
+    //         //   latitude: latitude_str,
+    //         //   longitude: longitude_str,
+    //         //   address: 'address',
+    //         //   name: 'name',
+    //         //   scale: 0,
+    //         //   success: (res) => {},
+    //         //   fail: (res) => {},
+    //         //   complete: (res) => {},
+    //         // })
+    //       }
+    //     })
+    //   }
+
+    // })
+    // })
   },
   //根据店铺地址得到经纬度
   select_shop_location(shop_add_str){
-    console.log('*',shop_add_str)
-    var lats=0
-    var lngs=0
-    var than=this  //将data的this指向作变更
-    qqmapsdk.geocoder({
-      address:shop_add_str,
-      success:res=>{
-        
-        lats=res.result.location.lat
-        lngs=res.result.location.lng
-        console.log(lats,lngs)
-        
-        //打开地图
-        // wx.openLocation({
-        //   latitude: lat,
-        //   longitude: lng,
-        //   address: 'address',
-        //   name: 'name',
-        //   scale: 0,
-        //   success: (res) => {},
-        //   fail: (res) => {},
-        //   complete: (res) => {}
-        // })
-      }
+    return new Promise(function(resolve,reject){   //api接口异步发处理包,解决回调地狱
+      // console.log('*',shop_add_str)
+      // var than=this  //将data的this指向作变更
+      qqmapsdk.geocoder({
+        address:shop_add_str,
+        success:res=>{
+          var lat_lng_arry=[]
+          var lats=res.result.location.lat
+          var lngs=res.result.location.lng
+          if(lats&&lngs){
+            lat_lng_arry.push(lats)   //纬度添加到列表
+            lat_lng_arry.push(lngs)
+          }
+          // console.log(lat_lng_arry)
+          resolve(lat_lng_arry)
+          //打开地图
+          // wx.openLocation({
+          //   latitude: lat,
+          //   longitude: lng,
+          //   address: 'address',
+          //   name: 'name',
+          //   scale: 0,
+          //   success: (res) => {},
+          //   fail: (res) => {},
+          //   complete: (res) => {}
+          // })
+        }
+      })
     })
-    // console.log(lats,lngs)
-    return lats
   },
   
   //测试
@@ -259,33 +289,33 @@ Page({
 
   
 //发起网络数据请求获中央主视区url数组（及分类查询）
-Central_vision_get(filename){  //filename为点击选中分类名传过来要找文件夹名的参数
-  // console.log('filename:',filename),
-  wx.request({
-    url: 'http://192.168.3.15:5000/imgurl',   //到时改为服务器地址
-    // url: 'http://127.0.0.1:5000/imgurl',   //到时改为服务器地址
-      method:'get',
-      data:{
-        img_filename:filename,
-      },
-      
-      success:(res)=>{
-        // console.log(res.data)
-        this.setData({
-          // [filename]:res.data ,  //此处data属性为变量(列表属性)
-          transition_filename:res.data 
-          
-        })
-      }
-  })
- },
+  Central_vision_get(filename){  //filename为点击选中分类名传过来要找文件夹名的参数
+    // console.log('filename:',filename),
+    wx.request({
+      url: 'http://192.168.3.15:5000/imgurl',   //到时改为服务器地址
+      // url: 'http://127.0.0.1:5000/imgurl',   //到时改为服务器地址
+        method:'get',
+        data:{
+          img_filename:filename,
+        },
+        
+        success:(res)=>{
+          // console.log(res.data)
+          this.setData({
+            // [filename]:res.data ,  //此处data属性为变量(列表属性)
+            transition_filename:res.data 
+            
+          })
+        }
+    })
+  },
 
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-  // this.load_load_swiper_img()
+  this.load_load_swiper_img()
   this.load_current_position()  //获得当前经纬度
   
   // this.Central_vision_get('img_all')  //img_all是全图的文件夹名称
