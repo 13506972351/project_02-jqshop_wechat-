@@ -5,7 +5,6 @@ export const getlocation=()=>{
     wx.getLocation({
       type:'wgs84',
       success: (res) => {
-        
         resolve([res.latitude,res.longitude])  //成功后返回,返回多个值时要用数组
       },
       fail: (err) => {

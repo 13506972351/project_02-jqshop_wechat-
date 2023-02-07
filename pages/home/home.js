@@ -3,6 +3,7 @@ var app = getApp()   //在页面中使用全局变量，要先声明
 //导入request接口
 import {request} from "../../promise_api/request" 
 import {getlocation} from "../../promise_api/getlocation"
+import{geocoder}from "../../promise_api/geocoder"
 
 var QQMapWX=require('../../config_location/qqmap-wx-jssdk.min');  //引入位置服务
 var qqmapsdk=new QQMapWX({
@@ -69,8 +70,6 @@ Page({
   //打开程序获得当前位置,查找距离最近店铺
   load_current_position(){
     var _this=this  //这是因为this作用域指向问题 ，success函数实际是一个闭包 ， 无法直接通过this来setData
-    var _this2=this
-    var _this3=this
     var user_lai_str=0
     var user_lng_str=0
     getlocation({                  //调用封装的getlocation接口,得到当前的经纬度
@@ -80,7 +79,7 @@ Page({
         user_lai_str=a
         user_lng_str=b
         if(a&&b){        //当返回值到达后，对执行将经纬度转为地址的方法
-          console.log(a,b)
+          // console.log(a,b)
           qqmapsdk.reverseGeocoder({      //根据经纬度获取用用户地址
             location:{
               latitude:user_lai_str,
@@ -93,30 +92,88 @@ Page({
               var district=res.result.address_component.district;
               var street=res.result.address_component.street;
               var street_number=res.result.address_component.street_number;
-              console.log(province,city,district,street,street_number)
+              // console.log(province,city,district,street,street_number)
+
+              request({                  //调用封装的request接口
+                url:'calc_lately_location',   //接口地址
+                method:'post',
+                data:{
+                  provinces:JSON.stringify(province),  //将数据格式转为JSON
+                  citys:JSON.stringify(city),
+                  districts:JSON.stringify(district),
+                  streets:JSON.stringify(street),
+                  street_numbers:JSON.stringify(street_number),
+                  // latitude_strs:user_lai_str,
+                  // longitude_strs:user_lng_str
+                }
+              })
+              .then(res=>{
+                //如果是本省找到匹配最近店铺，如果有找到返回的为string类型，否则在本省找不到返回为外省多店objet
+                if(typeof res.data==='string'){ 
+                  _this.setData({
+                      lately_shop_name:res.data
+                  })
+                }else{
+                  // console.log('店铺名：',res.data[0],res.data[1])
+                  if(res.data){     //判断店铺地址是否存在
+                    var allshop_list=[]
+                    var single_shop_str=''
+                    var single_shop_list=[]
+                    
+                      for(var i=0;i<=res.data.length-1;i++){
+                        
+                        var shop_name=''
+                        shop_name=res.data[i]
+                        var y=0
+                        geocoder({  //调用返回经纬度的方法
+                          add_str:shop_name,
+                          //为解决异步问题，将i一起传给函数，再返回来，达到同步
+                        })
+                        .then(([name,a,b])=>{    //返回店铺名，经度纬度，i的值
+                          y=y+1//为解决异步问题，用y计数，当循环的次数==该循环的店铺数时，打印最后一次经纬度数组的值并传给服务器，达到同步
+
+                          // console.log('name,a,b=',name,a,b)
+                          single_shop_str=name+','+a+','+b
+                          single_shop_list=single_shop_str.split(',')
+                          allshop_list.push(single_shop_list)
+                          // console.log(y)
+                          if(y==res.data.length){
+                            console.log(allshop_list)
+                            var shop_loaction_info=''
+                            for(var i=0;i<=allshop_list.length-1;i++){  //将对象里的值取出加到字符串变量中
+                              shop_loaction_info=shop_loaction_info+allshop_list[i]+'*'
+                            }
+                            // console.log(shop_loaction_info)
+                            request({
+                              url:'calc_lately_Field_shop',   //接口地址
+                              method:'post',
+                              data:{
+                                shop_add_info:JSON.stringify(shop_loaction_info),  //将数据格式转为JSON
+                                latitude_strs:user_lai_str,  //纬度
+                                longitude_strs:user_lng_str  //经度
+                              }
+                            })
+                            .then(res=>{
+
+
+                            })
+                          }
+                        })
+                        
+                      }
+                    
+                    
+                    
+                  }
+                }
+             })    
             }
           })
         }
     })
     
         
-    //         //将用户地址传送到后台处理
-    //         wx.request({
-    //           url: server_ip+'calc_lately_location',
-    //           method:'post',
-    //           data:{
-    //             provinces:JSON.stringify(province),  //将数据格式转为JSON
-    //             citys:JSON.stringify(city),
-    //             districts:JSON.stringify(district),
-    //             streets:JSON.stringify(street),
-    //             street_numbers:JSON.stringify(street_number),
-    //             latitude_strs:latitude_str,
-    //             longitude_strs:longitude_str
-
-    //           },
-    //           header: {
-    //             'content-type': 'application/x-www-form-urlencoded'  //请求头类型
-    //             },
+    
     //           success:(res)=>{
     //             var  ress=res.data
     //             // console.log(ress)  //返回离用户最近的店铺
@@ -166,37 +223,37 @@ Page({
     // })
   },
   //根据店铺地址得到经纬度
-  select_shop_location(shop_add_str){
-    return new Promise(function(resolve,reject){   //api接口异步发处理包,解决回调地狱
-      // console.log('*',shop_add_str)
-      // var than=this  //将data的this指向作变更
-      qqmapsdk.geocoder({
-        address:shop_add_str,
-        success:res=>{
-          var lat_lng_arry=[]
-          var lats=res.result.location.lat
-          var lngs=res.result.location.lng
-          if(lats&&lngs){
-            lat_lng_arry.push(lats)   //纬度添加到列表
-            lat_lng_arry.push(lngs)
-          }
-          // console.log(lat_lng_arry)
-          resolve(lat_lng_arry)
-          //打开地图
-          // wx.openLocation({
-          //   latitude: lat,
-          //   longitude: lng,
-          //   address: 'address',
-          //   name: 'name',
-          //   scale: 0,
-          //   success: (res) => {},
-          //   fail: (res) => {},
-          //   complete: (res) => {}
-          // })
-        }
-      })
-    })
-  },
+  // select_shop_location(shop_add_str){
+  //   return new Promise(function(resolve,reject){   //api接口异步发处理包,解决回调地狱
+  //     // console.log('*',shop_add_str)
+  //     // var than=this  //将data的this指向作变更
+  //     qqmapsdk.geocoder({
+  //       address:shop_add_str,
+  //       success:res=>{
+  //         var lat_lng_arry=[]
+  //         var lats=res.result.location.lat
+  //         var lngs=res.result.location.lng
+  //         if(lats&&lngs){
+  //           lat_lng_arry.push(lats)   //纬度添加到列表
+  //           lat_lng_arry.push(lngs)
+  //         }
+  //         // console.log(lat_lng_arry)
+  //         resolve(lat_lng_arry)
+  //         //打开地图
+  //         // wx.openLocation({
+  //         //   latitude: lat,
+  //         //   longitude: lng,
+  //         //   address: 'address',
+  //         //   name: 'name',
+  //         //   scale: 0,
+  //         //   success: (res) => {},
+  //         //   fail: (res) => {},
+  //         //   complete: (res) => {}
+  //         // })
+  //       }
+  //     })
+  //   })
+  // },
   
   //测试
   cs(str){
