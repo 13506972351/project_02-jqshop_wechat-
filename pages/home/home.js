@@ -87,8 +87,8 @@ Page({
             },
             success:function(res){
               // console.log(res)
-              var province=res.result.address_component.province;
-              var city=res.result.address_component.city;
+              var province=res.result.address_component.province;   //省
+              var city=res.result.address_component.city;           //地
               var district=res.result.address_component.district;
               var street=res.result.address_component.street;
               var street_number=res.result.address_component.street_number;
@@ -119,42 +119,55 @@ Page({
                     var allshop_list=[]
                     var single_shop_str=''
                     var single_shop_list=[]
-                    
-                      for(var i=0;i<=res.data.length-1;i++){
+                    var new_shop_add_name=[]
+                      // console.log(res.data)
+                      for(var s=0;s<=res.data.length-1;s++){
+                        var newres=res.data[s].split('*')      //由于服务器返回来的信息是[‘店铺地址*店铺名’，‘店铺地址*店铺名’]，把每个元素从*分割成小列表
+                        new_shop_add_name.push(newres)         //再添加到一个大列表中[[‘店铺地址，店铺名’]，[‘店铺地址,店铺名’]]
+                      }
+                      // console.log('new_shop_add_name=',new_shop_add_name[1][0])
+                      for(var i=0;i<=new_shop_add_name.length-1;i++){
                         
                         var shop_name=''
-                        shop_name=res.data[i]
+                        shop_name=new_shop_add_name[i][0]    //店铺地址（省+地）
+                        // console.log('$$',shop_name)
                         var y=0
                         geocoder({  //调用返回经纬度的方法
-                          add_str:shop_name,
+                          add_str:shop_name,     //店铺地址（省+地）
+                          shop_names:new_shop_add_name[i][1]    //把店铺名也提交给函数，再和经纬度一起返返回来
                           //为解决异步问题，将i一起传给函数，再返回来，达到同步
                         })
                         .then(([name,a,b])=>{    //返回店铺名，经度纬度，i的值
                           y=y+1//为解决异步问题，用y计数，当循环的次数==该循环的店铺数时，打印最后一次经纬度数组的值并传给服务器，达到同步
 
                           // console.log('name,a,b=',name,a,b)
-                          single_shop_str=name+','+a+','+b
-                          single_shop_list=single_shop_str.split(',')
-                          allshop_list.push(single_shop_list)
+                          single_shop_str=name+','+a+','+b     //将店铺名与经纬度拼在一起
+                          single_shop_list=single_shop_str.split(',')    //再从逗号分割成列表
+                          allshop_list.push(single_shop_list)      //将每个店的店铺名+经纬度的小列表，添加到一个大列表中
                           // console.log(y)
-                          if(y==res.data.length){
-                            console.log(allshop_list)
+                          if(y==res.data.length){    //当所有查询经纬度的循环完成
+                            // console.log(allshop_list)
                             var shop_loaction_info=''
                             for(var i=0;i<=allshop_list.length-1;i++){  //将对象里的值取出加到字符串变量中
-                              shop_loaction_info=shop_loaction_info+allshop_list[i]+'*'
+                              shop_loaction_info=shop_loaction_info+allshop_list[i]+'*'  //将大列表各店值取出以*分割标识拼成字符串
                             }
-                            // console.log(shop_loaction_info)
+                            console.log('yy',shop_loaction_info)
                             request({
                               url:'calc_lately_Field_shop',   //接口地址
                               method:'post',
                               data:{
                                 shop_add_info:JSON.stringify(shop_loaction_info),  //将数据格式转为JSON
-                                latitude_strs:user_lai_str,  //纬度
-                                longitude_strs:user_lng_str  //经度
+                                latitude_strs:user_lai_str,  //用户所在纬度
+                                longitude_strs:user_lng_str  //用户所有经度
                               }
                             })
                             .then(res=>{
-
+                              // console.log(res.data)
+                              if(res.data){
+                                _this.setData({
+                                  lately_shop_name:res.data
+                                })
+                              }
 
                             })
                           }
