@@ -1,32 +1,49 @@
-// pages/details/details.js
+import {request} from "../../promise_api/request" 
+import {getlocation} from "../../promise_api/getlocation"
+import{geocoder}from "../../promise_api/geocoder"
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     transition_filename:[],  //过渡参数传用于存储get_details_url函数返回的图片url列表
-    details:{}
+    details:{},
+    goods_info_list:[]
   },
 
   // 请求服务器商品祥情图片资料
-  get_details_url(details_url){
-    wx.request({
-      // url: 'http://127.0.0.1:5000/detailed_imgurl',//到时改为服务器地址
-      url: 'http://192.168.3.15:5000/detailed_imgurl',//到时改为服务器地址
-      method:'get',
+  get_goods_specific_info(goods_number,shop_name){
+    // console.log('***',goods_number)
+    request({                  //调用封装的request接口
+      url:'load_goods_specific',   //商品祥情页面接口地址
+      method:'post',
       data:{
-        img_filename:details_url,
+        goods_name:goods_number,
+        shop_name:shop_name
       },
-      success:(res)=>{
-        // console.log('res.data[0]:',res.data[0])
-        // console.log('res.data[1]:',res.data[1])
-        this.setData({
-          transition_filename:res.data[1],
-          details:res.data[0]
-        })
-      }
     })
+    .then(res=>{
+      console.log(res.data)
+      this.setData({
+        goods_info_list:res.data 
+      })
+    })
+    
+    // wx.request({
+    
+    //   // url: 'http://127.0.0.1:5000/detailed_imgurl',//到时改为服务器地址
+    //   url: 'http://192.168.3.15:5000/detailed_imgurl',//到时改为服务器地址
+    //   method:'get',
+    //   data:{
+    //     img_filename:details_url,
+    //   },
+    //   success:(res)=>{
+    //     // console.log('res.data[0]:',res.data[0])
+    //     // console.log('res.data[1]:',res.data[1])
+    //     this.setData({
+    //       transition_filename:res.data[1],
+    //       details:res.data[0]
+    //     })
+    //   }
+    // })
   },
   //点击底部店铺图标返回主页
   geto_home(){
@@ -44,8 +61,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.get_details_url(options.details_url)  //主页面跳转后执行请求服务器函数，并传文件路径
-    // console.log('options.details_url:',options.details_url)
+    this.get_goods_specific_info(options.goods_name,options.shop_name)  //主页面跳转后执行请求服务器函数，并传商品款号参数parameter为跳转时的？后面的名
+    // console.log('ooo',options.shop_name)
   },
 
   /**

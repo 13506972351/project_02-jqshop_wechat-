@@ -1,5 +1,6 @@
 //定义公共url
-const baseUrl = "http://192.168.109.110:5000/"
+var app = getApp()   //在页面中使用全局变量，要先声明
+const baseUrl=app.globalData.server_ip   //引入app.js全局变量服务器ip地址
 export const request=(params)=>{
   //返回promise对象
   return new Promise((resolve,reject)=>{

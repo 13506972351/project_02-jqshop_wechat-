@@ -4,7 +4,7 @@ var app = getApp()   //在页面中使用全局变量，要先声明
 import {request} from "../../promise_api/request" 
 import {getlocation} from "../../promise_api/getlocation"
 import{geocoder}from "../../promise_api/geocoder"
-
+//微信位置服务配置
 var QQMapWX=require('../../config_location/qqmap-wx-jssdk.min');  //引入位置服务
 var qqmapsdk=new QQMapWX({
   key:"TRFBZ-YPJLD-ELM4R-P7BOK-JVPKZ-JSFCI"   //运用key
@@ -13,14 +13,8 @@ Page({
 
   data: {
     swiper_imgurl_list:[],   //轮播图url列表
-    user_lat:0,   //用户纬度
-    user_lon:0,    //用户经度
     lately_shop_name:'' , //最近店铺名
-    shop_add:'',
-
-    shop_name_str:'',   //外省店铺名
-    lai_number:0,    //外省店铺纬度
-    lng_number:0,    //外省店铺经度
+ 
 
 
 
@@ -53,7 +47,7 @@ Page({
     coord_pows:true,   //配件明细列表显示隐藏开关
     vwid:''  ,     //label背景色控制
     transition_filename:[],  //过渡参数传用于存储Central_vision_get函数返回的图片url列表,格式：[{img_url:'',describe:'',price:''}]
-    details_urlstr:'',
+    click_goods_name:'',  //被点击商品款号
   },
   //发起网络数据请求获取轮播图url数组
   load_load_swiper_img(){
@@ -108,11 +102,15 @@ Page({
                 }
               })
               .then(res=>{
+                // console.log('ty',typeof res.data)
                 //如果是本省找到匹配最近店铺，如果有找到返回的为string类型，否则在本省找不到返回为外省多店objet
                 if(typeof res.data==='string'){ 
+                  
                   _this.setData({
                       lately_shop_name:res.data
+                      // transition_filename:res.data
                   })
+                  _this.Central_vision_get()   //执行中央主视区图片渲染函数
                 }else{
                   // console.log('店铺名：',res.data[0],res.data[1])
                   if(res.data){     //判断店铺地址是否存在
@@ -151,7 +149,7 @@ Page({
                             for(var i=0;i<=allshop_list.length-1;i++){  //将对象里的值取出加到字符串变量中
                               shop_loaction_info=shop_loaction_info+allshop_list[i]+'*'  //将大列表各店值取出以*分割标识拼成字符串
                             }
-                            console.log('yy',shop_loaction_info)
+                            // console.log('yy',shop_loaction_info)
                             request({
                               url:'calc_lately_Field_shop',   //接口地址
                               method:'post',
@@ -162,119 +160,35 @@ Page({
                               }
                             })
                             .then(res=>{
-                              // console.log(res.data)
+                              // console.log(res)
                               if(res.data){
                                 _this.setData({
                                   lately_shop_name:res.data
                                 })
+                                _this.Central_vision_get()  //执行中央主视区图片渲染函数
+
                               }
 
                             })
                           }
                         })
                         
-                      }
-                    
-                    
-                    
+                      } 
                   }
                 }
-             })    
+            })    
             }
           })
         }
     })
-    
-        
-    
-    //           success:(res)=>{
-    //             var  ress=res.data
-    //             // console.log(ress)  //返回离用户最近的店铺
-    //             // console.log(typeof ress==='string');
-    //             if(typeof ress==='string'){   //如果是本省找到匹配最近店铺，返回的为string类型，否则为objet
-    //               _this.setData({
-    //                 lately_shop_name:ress
-    //               })
-    //             }else{
-    //               // console.log(ress.length)
-    //               //分别获取后台传来的地址的经纬度，并返回后台
-    //               var lai_lng_list=[]  //定义列表，用于存储单个店经纬度
-    //               let lai_lng_str=[]
-    //               for(var i=0;i<=ress.length-1;i++){
-    //                 var name_str=''
-    //                 var lainumber=0
-    //                 var lngnumber=0
-    //                 let res1=_this2.select_shop_location(ress[i])   //pormise取数方法
-    //                 let a=res1.then((res)=>{
-    //                   lainumber=res[0]
-    //                   lngnumber=res[1]
-    //                 })
-    //                 name_str=ress[i]
-    //                 console.log(name_str,lainumber,lngnumber)
+  },  
+ 
 
-    //               }
-                  
-    //             }
-                
-    //           }
-    //         })
-    //         // wx.openLocation({    //根据经纬度打开地图
-    //         //   latitude: latitude_str,
-    //         //   longitude: longitude_str,
-    //         //   address: 'address',
-    //         //   name: 'name',
-    //         //   scale: 0,
-    //         //   success: (res) => {},
-    //         //   fail: (res) => {},
-    //         //   complete: (res) => {},
-    //         // })
-    //       }
-    //     })
-    //   }
-
-    // })
-    // })
-  },
-  //根据店铺地址得到经纬度
-  // select_shop_location(shop_add_str){
-  //   return new Promise(function(resolve,reject){   //api接口异步发处理包,解决回调地狱
-  //     // console.log('*',shop_add_str)
-  //     // var than=this  //将data的this指向作变更
-  //     qqmapsdk.geocoder({
-  //       address:shop_add_str,
-  //       success:res=>{
-  //         var lat_lng_arry=[]
-  //         var lats=res.result.location.lat
-  //         var lngs=res.result.location.lng
-  //         if(lats&&lngs){
-  //           lat_lng_arry.push(lats)   //纬度添加到列表
-  //           lat_lng_arry.push(lngs)
-  //         }
-  //         // console.log(lat_lng_arry)
-  //         resolve(lat_lng_arry)
-  //         //打开地图
-  //         // wx.openLocation({
-  //         //   latitude: lat,
-  //         //   longitude: lng,
-  //         //   address: 'address',
-  //         //   name: 'name',
-  //         //   scale: 0,
-  //         //   success: (res) => {},
-  //         //   fail: (res) => {},
-  //         //   complete: (res) => {}
-  //         // })
-  //       }
-  //     })
-  //   })
-  // },
-  
   //测试
   cs(str){
     var at=str
     console.log(at)
   },
-
-
 
 // 服装明细点击隐藏显示事件
   clickfashclas(){
@@ -345,13 +259,16 @@ Page({
   },
   // 点击图片单元进入详情页面(跳转)
   click_details(e){
-    const img_details_url=e.currentTarget.dataset.name
-    // console.log('img_details_url',img_details_url)
+    const goods_details_number=e.currentTarget.dataset.name
+    const goods_details_shop=e.currentTarget.dataset.shop
+    // console.log('goods_details_number',goods_details_number)
     this.setData({
-      details_urlstr:img_details_url
+      click_goods_name:goods_details_number
     })
+    // console.log('ddd',this.data.click_goods_name),
     wx.navigateTo({
-      url: '/pages/details/details?details_url='+this.data.details_urlstr,
+      // url: '/pages/details/details?parameter='+this.data.click_goods_name,  //带单个参数
+      url: `/pages/details/details?goods_name=${this.data.click_goods_name}&shop_name=${goods_details_shop}`   //带多个参数，注意单引号
     })
   },
 
@@ -359,24 +276,25 @@ Page({
 
   
 //发起网络数据请求获中央主视区url数组（及分类查询）
-  Central_vision_get(filename){  //filename为点击选中分类名传过来要找文件夹名的参数
+  Central_vision_get(){  //filename为点击选中分类名传过来要找文件夹名的参数
+    var _this=this
+    var lately_shop_names=_this.data.lately_shop_name
     // console.log('filename:',filename),
-    wx.request({
-      url: 'http://192.168.3.15:5000/imgurl',   //到时改为服务器地址
-      // url: 'http://127.0.0.1:5000/imgurl',   //到时改为服务器地址
-        method:'get',
-        data:{
-          img_filename:filename,
-        },
-        
-        success:(res)=>{
-          // console.log(res.data)
-          this.setData({
-            // [filename]:res.data ,  //此处data属性为变量(列表属性)
-            transition_filename:res.data 
-            
-          })
-        }
+  
+    // console.log('_this.data.lately_shop_name',_this.data.lately_shop_name)
+    request({                  //调用封装的request接口
+      url:'central_vision_img_get',   //接口地址
+      method:'post',
+      data:{
+        lately_shop_name:_this.data.lately_shop_name,
+      }
+    })
+    .then(res=>{
+      // console.log(res.data)
+     
+      _this.setData({
+        transition_filename:res.data  
+      })
     })
   },
 
@@ -387,9 +305,11 @@ Page({
   onLoad(options) {
   this.load_load_swiper_img()
   this.load_current_position()  //获得当前经纬度
+  // this.Central_vision_get()  //获取最近店铺中央主视区图片
+
   
-  // this.Central_vision_get('img_all')  //img_all是全图的文件夹名称
-  // this.cs('qqqqq')
+  
+
   },
 
   /**

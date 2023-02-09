@@ -128,6 +128,14 @@
   /* background-color: #fff; */
   
 }
+.price_frame{
+  display: flex;
+  flex-direction: row;
+}
+.original_price{
+  font-size:22rpx ;
+  text-decoration:line-through
+}
 .central_img{
   /* width: 325rpx; */
   width: 100%;

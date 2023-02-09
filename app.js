@@ -15,6 +15,6 @@ App({
   },
   globalData: {     //定义全局变量
     userInfo: null, 
-    server_ip:"http://192.168.109.110:5000/"
+    server_ip:"http://192.168.109.111:5000/"   //服务器ip地址
   }, 
 }) 

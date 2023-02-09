@@ -2,8 +2,8 @@
   <!--轮播图-->
   <swiper indicator-dots circular  class="swiperstyle">   
     <!-- indicator-dots 圆点 circular最后一张衔接 autoplay="true"自动播放-->
-    <swiper-item  wx:for="{{transition_filename}}" wx:key="index">
-      <image src="{{item}}" mode="aspectFit " class="swiperimg"></image>
+    <swiper-item  wx:for="{{goods_info_list}}" wx:key="index">
+      <image src="{{item.img_url}}" mode="aspectFit " class="swiperimg"></image>
       <!-- mode="aspectFill 等比例缩放 -->
     </swiper-item>
   </swiper>
@@ -11,10 +11,10 @@
   <view class="details">
     <View class="price_all">
       <label for="" class="icons">￥</label>
-      <text class="price">{{details.price}}</text>
+      <text class="price">{{goods_info_list[0].sale_price}}</text>
     </View>
     <view class="describe_all">
-      <text class="describe">{{details.describe}}</text>
+      <text class="describe">{{goods_info_list[0].goods_describe}}</text>
     </view>
   </view>
   <!-- 颜色尺码发货信息 -->
@@ -27,12 +27,12 @@
       </view>
       <view class="color_frame">
         <view class="color_img" >
-          <block wx:for="{{transition_filename}}" wx:key="index">
-            <image src="{{item}}" class="color_imgs"></image>
+          <block wx:for="{{goods_info_list}}" wx:key="index">
+            <image src="{{item.img_url}}" class="color_imgs"></image>
           </block>
         </view>
         <view class="color_count_label_frame">
-          <label for="" class="color_count_label">共{{transition_filename.length}}种颜色可选</label>
+          <label for="" class="color_count_label">共{{goods_info_list.length}}种颜色可选</label>
         </view>
         
       </view>
@@ -40,10 +40,10 @@
     <view class="post_frame">
       <label for="" class="post_lable">发货</label>
       <view class="post_details">
-        <label for="">发货地址：{{}}</label>
-        <label for="">快递：</label>
-        <label for="">免运费</label>
-        <label for="">月销</label>
+        <label for="">{{goods_info_list[0].shop_add}}</label>
+        <!-- <label for="">快递：</label> -->
+        <label for="" class="freight">免运费</label>
+        <label for="" class="m_count">月销</label>
         <label for="">a{{}}</label>
       </view>
       

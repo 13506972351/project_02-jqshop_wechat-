@@ -33,6 +33,9 @@
   margin: 5rpx;
   font-weight: 800;
 }
+.m_count,.freight{
+  margin-left: 20rpx;
+}
 .describe_all{
   margin: 5rpx;
   padding: 15rpx;

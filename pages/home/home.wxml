@@ -56,17 +56,18 @@
 <!-- 中央视觉区渲染 -->
 <view class="central_vision">
   <block wx:for="{{transition_filename}}" wx:key="index">
-    <View class="unit" data-name="{{item.img_url}}" bindtap="click_details">
+    <View class="unit" data-shop="{{item.shop_name}}" data-name="{{item.goods_number}}" bindtap="click_details">
       <View class="img_frame">
-        <image src="{{item.img_url}}" mode="aspectFit" class="central_img"></image>
+        <image src="{{item.goods_url}}" mode="aspectFit" class="central_img"></image>
       </View>
       <View class="information">
-        <label for="" class="describe">{{item.describe}}</label>
-        <label for="" class="price" >￥{{item.price}}</label>
+        <label for="" class="describe">{{item.goods_describe}}</label>
+        <view class="price_frame">
+          <label for="" class="original_price">原价￥{{item.goods_original}}</label>
+          <label for="" class="price" >￥{{item.goods_sale}}</label>
+        </view>
       </View>
     </View>
-   
-      
   </block>
 </view>
 
