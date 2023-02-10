@@ -1,0 +1,9 @@
+.bgc_frame{
+  position: fixed;
+  top: 100rpx;
+  border: 1rpx solid red;
+}
+.title_frame{
+  display: flex;
+  flex-direction: row;
+}

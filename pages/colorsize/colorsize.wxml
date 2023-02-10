@@ -1,0 +1,30 @@
+<view class="bgc_frame">
+  <view class="title_frame">
+    <view class="img_frame">
+      <image  class="goods_img" src="" mode=""/>
+    </view>
+    <view class="price_frame">
+      <label for="" class="money_icon">￥</label><label for="" class="money_text"></label>
+    </view>
+      <label for="">X</label>
+    <view>
+      
+    </view>
+  </view>
+  <view>
+    地址
+  </view>
+  <view>
+    颜色分类
+  </view>
+  <view>
+    尺码分类
+  </view>
+  <view>
+    数量
+  </view>
+  <view>
+    底部
+  </view>
+  
+</view>

@@ -23,7 +23,7 @@
       <view class="choice_frame">
         <label for="" class="choice_label">选择</label>
         <label for="" class="color_label">颜色/尺码分类</label>
-        <label class="choice_iconss">>></label>
+        <label class="choice_iconss"  bindtap="click_choice_color_size">>></label>
       </view>
       <view class="color_frame">
         <view class="color_img" >
@@ -32,7 +32,7 @@
           </block>
         </view>
         <view class="color_count_label_frame">
-          <label for="" class="color_count_label">共{{goods_info_list.length}}种颜色可选</label>
+          <label for="" class="color_count_label"  bindtap="click_choice_color_size" >共{{goods_info_list.length}}种颜色可选</label>
         </view>
         
       </view>
@@ -96,7 +96,7 @@
       <label for="" class="bottom_labela">购物车</label>
     </view>
     <view class="shop_frame">
-      <view class="jion_shopcar">
+      <view class="jion_shopcar" bindtap="add_shop_cart_fun">
         <label for="" class="bottom_labelb">加入购物车</label>
       </view>
       <view class="Buy_now">
@@ -107,4 +107,95 @@
   </view>
 
 </view>
+
+<!-- 点击选择颜色尺码弹窗 -->
+
+<view class="choice_color_size_frame" hidden="{{choice_color_size_frame_hidden}}">
+  <view class="title_frame margins">
+    <view class="img_frame " >
+      <image bindtap="click_show_bigimg"  class="goods_img" src="{{goods_imgurl}}" mode=""/>
+    </view>
+    <view class="price_frame">
+      <label for="" class="money_icon">￥</label><label for="" class="money_text">122</label>
+    </view >
+    <view class="close_icon" bindtap="click_close_fun">
+      <label for="" >✕</label>
+    </view>
+  </view>
+  <view class="margins add_frame">
+    <view class="add_text_frame">
+      <view class="add_text">
+       地址 
+      </view>
+      <view class="add_tel">
+       电话
+       </view>
+    </view>
+    <view class="add_icon">
+        >
+    </view>
+  </view>
+  <view class="margins color_farme">
+    <view>
+      <label for="" class="color_text_count">颜色分类({{goods_info_list.length}})</label>
+    </view>
+    <view class="color_class_list" >
+      <block wx:for="{{goods_info_list}}" wx:key="index">
+        <view bindtap="click_color_choice_list" class="color_img_text_frame   {{color_count==index?'checked_color_size_border':'Unchecked_color_size_border'}}" data-index="{{index}}" data-colorid="{{item.color_id}}" data-colorname="{{item.color_name}}" data-imgurl="{{item.img_url}}" data-sizeid="{{item.size_id}}" data-sizename="{{item.size_name}}" data-goodsnumber="{{item.goods_number}}" data-saleprice="{{item.sale_price}}" data-shopname="{{item.shop_name}}" data-shopadd="{{item.shop_add}}" data-goodsdescribe="{{item.goods_describe}}" data-goodsclass="{{item.goods_class}}">
+          <view class="color_class_img_frame">
+            <image class="color_class_img" src="{{item.img_url}}" mode=""/>
+          </view>
+          <view class="color_class_texts">
+            <label for="">{{item.color_name}}</label>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="margins">
+    <view>
+      尺码分类
+    </view>
+    <view class="size_list_frame">
+      <block wx:for="{{choice_size_list}}" wx:key="index">
+        <view class="size_unit {{size_count==index?'checked_color_size_border':'Unchecked_color_size_border'}}" bindtap="click_size_btn_fun" data-index="{{index}}" data-sizeid="{{item.size_id}}" data-sizename="{{item.size_name}}">
+          {{item.size_name}}
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="margins count_frame">
+    <view class="count_label1">
+      数量
+    </view>
+    <view class="count_label2">
+      （限购5件）有货
+    </view>
+    <view class="count_add_red_frame" >
+      <view class="add_btn" bindtap="count_red_fun">
+        -
+      </view>
+      <view class="count_text">
+        {{count_text}}
+      </view>
+      <view class="red_btn" bindtap="count_addd_fun">
+        +
+      </view>
+    </view>
+    
+  </view>
+  <view class="margins bottom_frame">
+    <view class="left_frame">
+      加入购物车
+    </view>
+    <view class="right_frame">
+      立即购买
+    </view>
+  </view>
   
+</view>
+  
+<!-- 点击颜色弹出显示大图 -->
+<view class="click_colorimg_show_frame" hidden="{{click_color_img_show_big_img}}">
+  <image bindtap="click_bigimg_colse_show" class="click_colorimg_show_bigimg" src="{{goods_imgurl}}" mode=""/>
+</view>
