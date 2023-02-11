@@ -14,14 +14,10 @@ Page({
   data: {
     swiper_imgurl_list:[],   //轮播图url列表
     lately_shop_name:'' , //最近店铺名
- 
-
-
-
-
     fashshow:false,  //服装明细渲染控制
     shoeshow:false,  //鞋子明细渲染控制
     coordshow:false,  //配件明细渲染控制
+    goods_class_list:[],   //左侧分类栏数组
     //服装品类表
     fashlist:{
       big_boy_fash:'男大童服装',
@@ -295,10 +291,49 @@ Page({
       _this.setData({
         transition_filename:res.data  
       })
+      let newarry=JSON.parse(JSON.stringify(this.data.transition_filename))  //转json格式
+      _this.dregular_lookup_approximate_goods_class(newarry)
     })
   },
+  //正则表达式，查找商品分类关键字
+  dregular_lookup_approximate_goods_class(lists){
+      var fash_arr=[]
+      var shoe_arr=[]
+      var other_arr=[]
+      var goods_class_lists=[]
+      var fashion=/服装/   //定义正则表达式，包含服装
+      var shoe=/鞋子/
+      for(var i=0;i<=lists.length-1;i++){
+        if(fashion.test(lists[i]['shop_class'])){
+          fash_arr.push(lists[i]['shop_class'])
+        }else if(shoe.test(lists[i]['shop_class'])){
+          shoe_arr.push(lists[i]['shop_class'])
+        }else{
+          other_arr.push(lists[i]['shop_class'])
+        }
+      }
+      //删除重复项,并添加到大列表中
+      var new_fash_arr=[]
+      var new_shoe_arr=[]
+      var new_other_arr=[]
+      if(fash_arr.length>0){
+        new_fash_arr=Array.from(new Set(fash_arr))
+        goods_class_lists.push(new_fash_arr)
+      }
+      if(shoe_arr.length>0){
+        new_shoe_arr=Array.from(new Set(shoe_arr))
+        goods_class_lists.push(new_shoe_arr)
+      }
+      if(other_arr.length>0){
+        new_other_arr=Array.from(new Set(other_arr))
+        goods_class_lists.push(new_other_arr)
+      }
+      //添加到data中
+      this.setData({
+        goods_class_list:goods_class_lists
+      })
 
-
+  },
   /**
    * 生命周期函数--监听页面加载
    */
