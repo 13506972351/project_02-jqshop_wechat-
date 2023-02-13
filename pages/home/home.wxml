@@ -23,30 +23,33 @@
     <view class="clas"  bindtap="coordclickclas">
       <label for="" > 配件分类</label> 
     </view>
+    <view class="back" hidden="{{back_pows}}">
+      <image bindtap="click_refresh_icon" class="refresh_icon" src="../../image/icon/refresh1.png" mode=""/>
+    </view>
   </view>
   <!-- 具体分类 -->
   <view class="specific">
    
     <!-- 渲染服装明细列表 -->
     <view class="fashion" hidden= "{{fash_pows}}"  >
-      <block wx:for="{{fashlist}}"  wx:key="index">
-        <view data-pows="fash_pows" data-name="{{index}}" bindtouchstart="changcolor" class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
+      <block wx:for="{{goods_class_list[0]}}"  wx:key="index">
+        <view data-pows="fash_pows" data-name="{{item}}" bindtouchstart="changcolor" class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
           <label  for="" class="lab" > {{item}}</label>
         </view> 
       </block>
     </view>
      <!-- 渲染鞋子明细列表 -->
     <view class="shoes" hidden= "{{shoes_pows}}"  >
-      <block wx:for="{{shoelist}}"  wx:key="index">
-        <view data-pows="shoes_pows" data-name="{{index}}" bindtouchstart="changcolor" class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
+      <block wx:for="{{goods_class_list[1]}}"  wx:key="index">
+        <view data-pows="shoes_pows" data-name="{{item}}" bindtouchstart="changcolor" class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
           <label  for="" class="lab" > {{item}}</label>
         </view> 
       </block>
     </view>
     <!-- 渲染配件明细列表 -->
     <view class="coord" hidden= "{{coord_pows}}"  >
-      <block wx:for="{{ coordlist}}"  wx:key="index" >
-        <view data-pows="coord_pows"  bindtouchstart="changcolor" data-name="{{index}}"  class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
+      <block wx:for="{{goods_class_list[2]}}"  wx:key="index" >
+        <view data-pows="coord_pows"  bindtouchstart="changcolor" data-name="{{item}}"  class="widths {{vwid==index? 'bgc':''}}" data-index="{{index}}">
           <label  for="" class="lab" > {{item}}</label>
         </view> 
       </block>

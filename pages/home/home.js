@@ -18,30 +18,31 @@ Page({
     shoeshow:false,  //鞋子明细渲染控制
     coordshow:false,  //配件明细渲染控制
     goods_class_list:[],   //左侧分类栏数组
-    //服装品类表
-    fashlist:{
-      big_boy_fash:'男大童服装',
-      sim_boy_fash:'男小童服装',
-      big_girl_fash:'女大童服装',
-      sim_girl_fash:'女小童服装',
-    },
-    //鞋子品类表
-    shoelist:{
-      big_boy_shoe:'男大童鞋子',
-      sim_boy_shoe:'男小童鞋子',
-      big_girl_shoe:'女大童鞋子',
-      sim_girl_shoe:'女小童鞋子',
-    },
-    //配件品类表
-    coordlist:{
-      socks:'袜子',
-      basketball:'篮球',
-      skates:'轮滑鞋'
-    },
+    // //服装品类表
+    // fashlist:{
+    //   big_boy_fash:'男大童服装',
+    //   sim_boy_fash:'男小童服装',
+    //   big_girl_fash:'女大童服装',
+    //   sim_girl_fash:'女小童服装',
+    // },
+    // //鞋子品类表
+    // shoelist:{
+    //   big_boy_shoe:'男大童鞋子',
+    //   sim_boy_shoe:'男小童鞋子',
+    //   big_girl_shoe:'女大童鞋子',
+    //   sim_girl_shoe:'女小童鞋子',
+    // },
+    // //配件品类表
+    // coordlist:{
+    //   socks:'袜子',
+    //   basketball:'篮球',
+    //   skates:'轮滑鞋'
+    // },
     fash_pows:true ,  //服装明细列表显示隐藏开关
     shoes_pows:true,   //鞋子明细列表显示隐藏开关
     coord_pows:true,   //配件明细列表显示隐藏开关
     vwid:''  ,     //label背景色控制
+    back_pows:true,  //返回中央全部图片控制
     transition_filename:[],  //过渡参数传用于存储Central_vision_get函数返回的图片url列表,格式：[{img_url:'',describe:'',price:''}]
     click_goods_name:'',  //被点击商品款号
   },
@@ -106,6 +107,7 @@ Page({
                       lately_shop_name:res.data
                       // transition_filename:res.data
                   })
+                  
                   _this.Central_vision_get()   //执行中央主视区图片渲染函数
                 }else{
                   // console.log('店铺名：',res.data[0],res.data[1])
@@ -161,6 +163,7 @@ Page({
                                 _this.setData({
                                   lately_shop_name:res.data
                                 })
+                                
                                 _this.Central_vision_get()  //执行中央主视区图片渲染函数
 
                               }
@@ -180,11 +183,11 @@ Page({
   },  
  
 
-  //测试
-  cs(str){
-    var at=str
-    console.log(at)
-  },
+  // //测试
+  // cs(str){
+  //   var at=str
+  //   console.log(at)
+  // },
 
 // 服装明细点击隐藏显示事件
   clickfashclas(){
@@ -242,16 +245,23 @@ Page({
   },
   // 手指点击分类明细列表背景色变化事件
   changcolor(e){
-    const imgfilename=e.currentTarget.dataset.name
+    const class_name=e.currentTarget.dataset.name
     const pows=e.currentTarget.dataset.pows
     // console.log('pows:',pows)
-    // console.log(imgfilename)
+    // console.log('((((',imgfilename)
     this.setData({
       vwid: e.currentTarget.dataset.index,
-      [pows]:true    //用pows代替ml中hidden的值属性
+      [pows]:true  ,  //用pows代替ml中hidden的值属性
+      back_pows:false
     })
-    this.Central_vision_get(imgfilename)  //调用函数并传参（要找文件夹名称）
-
+    this.appoint_goodsclass_Central_vision_get(class_name)  //调用函数并传参（要找的商品分类名）
+  },
+  //点击刷新图标，重新显示店铺所有款式图片
+  click_refresh_icon(){
+    this.onLoad()   //重新加载当前页面
+    this.setData({
+      back_pows:true
+    })
   },
   // 点击图片单元进入详情页面(跳转)
   click_details(e){
@@ -268,8 +278,6 @@ Page({
     })
   },
 
-
-
   
 //发起网络数据请求获中央主视区url数组（及分类查询）
   Central_vision_get(){  //filename为点击选中分类名传过来要找文件夹名的参数
@@ -283,6 +291,7 @@ Page({
       method:'post',
       data:{
         lately_shop_name:_this.data.lately_shop_name,
+      
       }
     })
     .then(res=>{
@@ -292,7 +301,28 @@ Page({
         transition_filename:res.data  
       })
       let newarry=JSON.parse(JSON.stringify(this.data.transition_filename))  //转json格式
-      _this.dregular_lookup_approximate_goods_class(newarry)
+      _this.dregular_lookup_approximate_goods_class(newarry)  //调用类似查找函数，得到分类
+    })
+  },
+
+  // 点击主视区商品分类，发起网络请求mm查询商品图片，渲染主视区
+  appoint_goodsclass_Central_vision_get(goods_class_name){
+    var _this=this
+    var lately_shop_names=_this.data.lately_shop_name
+    request({                  //调用封装的request接口
+      url:'appoint_goodsclass_central_vision_img_get',   //接口地址
+      method:'post',
+      data:{
+        lately_shop_name:_this.data.lately_shop_name,
+        appoint_goods_class:goods_class_name
+      
+      }
+    })
+    .then(res=>{
+      // console.log(res.data)
+      _this.setData({
+        transition_filename:res.data  
+      })
     })
   },
   //正则表达式，查找商品分类关键字
@@ -316,15 +346,15 @@ Page({
       var new_fash_arr=[]
       var new_shoe_arr=[]
       var new_other_arr=[]
-      if(fash_arr.length>0){
+      if(fash_arr.length>0){        //不是空值，去除重复项
         new_fash_arr=Array.from(new Set(fash_arr))
         goods_class_lists.push(new_fash_arr)
       }
-      if(shoe_arr.length>0){
+      if(shoe_arr.length>0){//不是空值，去除重复项
         new_shoe_arr=Array.from(new Set(shoe_arr))
         goods_class_lists.push(new_shoe_arr)
       }
-      if(other_arr.length>0){
+      if(other_arr.length>0){//不是空值，去除重复项
         new_other_arr=Array.from(new Set(other_arr))
         goods_class_lists.push(new_other_arr)
       }

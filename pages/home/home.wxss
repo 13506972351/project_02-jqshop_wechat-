@@ -22,8 +22,8 @@
 .leftnavigation{
   width: 60rpx;
   height: 600rpx;
-  border: 1rpx solid #fad505;
-  background-color: #e6e1e1;
+  /* border: 1rpx solid #dddcd5; */
+  /* background-color: #e6e1e1; */
   /* background:rgba(245, 162, 8, 0.15); */
   display: flex;
   flex-direction: column;
@@ -35,16 +35,21 @@
 
 }
 .clas{
-  border: 1rpx solid  #f36161;
-  color: #f07b7b;
+  border: 1rpx solid  #e7e7e7;
+  background-color: #cfcdcd;
+  color: #f8f1f1;
   border-radius: 8rpx;
   height: 200rpx;
   text-align: center;
-  font-weight: 900;
-  box-shadow:5rpx 5rpx 5rpx 5rpx #f7b605;
+  font-weight: 600;
+  box-shadow:5rpx 5rpx 5rpx 5rpx #e9e8e8;
 
 }
-
+.refresh_icon{
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 20rpx;
+}
 .specific{
   width: 200rpx;
   height: 600rpx;
@@ -69,15 +74,15 @@
 }
 .fashion{
   position: fixed;
-  top: 320rpx;
+  top: 330rpx;
 }
 .shoes{
   position: fixed;
-  top: 520rpx;
+  top: 530rpx;
 }
 .coord{
   position: fixed;
-  top: 721rpx;
+  top: 731rpx;
   
 }
 .lab{
@@ -96,7 +101,7 @@
 }
 .central_vision{
   width: 100%;
-  background-color: rgb(201, 197, 197);
+  background-color: rgb(219, 216, 216);
   position: absolute;
   left: 80rpx;
   
