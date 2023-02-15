@@ -7,12 +7,25 @@ Page({
   data: {
 
   },
-
+  login(){
+    wx.login({
+      success: (res) => {
+        console.log('one',res)
+        wx.getUserProfile({
+          desc: '小程序要获取用户信息',
+          success:(res)=>{
+            console.log('two',res)
+          }
+        })
+      },
+    })
+  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.login()
   },
 
   /**
