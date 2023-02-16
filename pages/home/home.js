@@ -104,10 +104,11 @@ Page({
                 if(typeof res.data==='string'){ 
                   
                   _this.setData({
-                      lately_shop_name:res.data
+                      lately_shop_name:res.data,
+                      
                       // transition_filename:res.data
                   })
-                  
+                  app.globalData.lately_shopnames=res.data//给全局变量赋值
                   _this.Central_vision_get()   //执行中央主视区图片渲染函数
                 }else{
                   // console.log('店铺名：',res.data[0],res.data[1])
@@ -163,7 +164,7 @@ Page({
                                 _this.setData({
                                   lately_shop_name:res.data
                                 })
-                                
+                                app.globalData.lately_shopnames=res.data//给全局变量赋值
                                 _this.Central_vision_get()  //执行中央主视区图片渲染函数
 
                               }

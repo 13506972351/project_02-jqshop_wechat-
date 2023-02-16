@@ -1,2 +1,50 @@
 
+<view class="bgc">
+  <view class="title_frame ">
+    <view class="title_content text_centents">
+      <image class="head_icon" src="../../image/icon/head.png" mode=""/>
+    </view>
+    <view class="text_centents">
+      <label  class="username" for="">XXX</label>
+    </view>
+    <view class="text_centents">
+      
+    </view>
+  </view>
+  <view class="margin_item order_status">
+    <view class="Waiting_for_payment display_style">
+      <view class="lable_list">
+        <image class="icon_list" src="../../image/icon/fk.png" mode=""/>
+      </view>
+      <label class="lable_list" for="">待付款</label>
+    </view>
+    <view class="Waiting_for_receipt display_style">
+      <view class="lable_list">
+        <image class="icon_list" src="../../image/icon/dsh4.png" mode=""/>
+      </view>
+      <label class="lable_list" for="">待收货</label>
+    </view>
+    <view class="complete display_style">
+      <view class="lable_list">
+        <image class="icon_list" src="../../image/icon/over1.png" mode=""/>
+      </view>
+      <label class="lable_list"  for="">已完成</label>
+    </view>
+    <view class="return_goods display_style">
+      <view class="lable_list">
+        <image class="icon_list" src="../../image/icon/thd2.png" mode=""/>
+      </view>
+      <label class="lable_list"  for="">退换货</label>
+    </view>
+    <view class="all_orders display_style">
+      <view class="lable_list">
+        <image class="icon_list" src="../../image/icon/dd.png" mode=""/>
+      </view>
+      <label class="lable_list"  for="">全部订单</label>
+    </view>
+  </view>
+  <!-- <view class="margin_item">
+    
+  </view> -->
 
+</view>
