@@ -1,15 +1,11 @@
 var app = getApp()   //在页面中使用全局变量，要先声明
 import {request} from "../../promise_api/request" 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    eject_login_info_switch:false,//控制弹出注册框控制
   },
   //登录
-  login(){
+  login(nick,sex,tel,add){
     const latly_shop=app.globalData.lately_shopnames
     
     // console.log('****',latly_shop)
@@ -19,7 +15,7 @@ Page({
         // console.log('one',res.code)
         if(code_str){
           request({                  //调用封装的request接口
-            url:'wx_user_login',   //商品祥情页面接口地址
+            url:'wx_user_login',   //用户登际接口
             method:'post',
             data:{
               code_str:code_str,
@@ -57,13 +53,35 @@ Page({
       console.log('keystr',keystr.data)
       //向服务器发请求验证
 
-
-
-
     }else{
       console.log('未登录')
-      this.login()   //执行登录函数
+      this.setData({
+        eject_login_info_switch:false//弹出注册框
+      })
+      
     }
+    
+  },
+  formSubmit:function(e){  //点击注册按钮
+    let input_arry=e.detail.value
+    let nick=input_arry.nicks
+    let sex=input_arry.sexs
+    let tel=input_arry.tels
+    let add=input_arry.adds
+    if(nick&&sex&&tel&&add){
+      this.login(nick,sex,tel,add)   //执行登录函数
+    }else{
+      wx.showModal({   //提示弹窗
+        title: '提示',
+        content: '请输入注册信息',
+      })
+    }
+  },
+  
+  esc_fun(){    //点击取消按钮
+    this.setData({
+      eject_login_info_switch:true
+    })
     
   },
   /**
@@ -72,7 +90,7 @@ Page({
   onLoad(options) {
     
     // this.verification_login()
-    this.verification_login_key()
+    this.verification_login_key()//验证是否登录过
   },
 
   /**

@@ -43,8 +43,30 @@
       <label class="lable_list"  for="">全部订单</label>
     </view>
   </view>
-  <!-- <view class="margin_item">
+  <view class="eject_login_info" hidden="{{eject_login_info_switch}}">
+    <form bindsubmit="formSubmit">
+      <view class="nick">
+          <label for="">昵称</label>
+          <input type="text" name="nicks"  placeholder="请输入昵称"/>
+        </view>
+        <view class="sex">
+          <label for="">性别</label>
+          <input type="text"  name="sexs" placeholder="请输入性别"/>
+        </view>
+        <view class="tel">
+          <label for="">电话</label>
+          <input type="number" name="tels" placeholder="请输入电话号码"/>
+        </view>
+        <view class="add">
+          <label for="">收货地址</label>
+          <input type="text" name="adds" placeholder="请输入收货地址"/>
+        </view>
     
-  </view> -->
+        <view class="Confirm_cancellation">
+          <button class="confirm" bindtap="register_fun" form-type="submit">注册</button>
+          <button class="cancellation" bindtap="esc_fun">取消</button>
+        </view>
+      </form>
+  </view>
 
 </view>

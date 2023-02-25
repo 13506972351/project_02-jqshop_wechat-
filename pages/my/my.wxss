@@ -54,3 +54,33 @@ page{
 .username{
   color: #fff;
 }
+.eject_login_info{
+  width: 600rpx;
+  height: 600rpx;
+  background-color: #fff;
+  position: fixed;
+  left: 80rpx;
+  bottom: 30rpx;
+  border-radius: 10rpx;
+  text-align: center;
+}
+input{
+  border: 1rpx solid rgb(226, 225, 225);
+  margin: 5rpx 20rpx 0 20rpx;
+  height: 60rpx;
+  background-color: rgb(238, 237, 237);
+}
+.Confirm_cancellation{
+  display: flex;
+  flex-direction: row;
+  margin: 20rpx;
+
+}
+.confirm{
+  background-color: rgb(247, 28, 28);
+  margin: 20rpx;
+}
+.cancellation{
+  background-color:orange;
+  margin: 20rpx;
+}
