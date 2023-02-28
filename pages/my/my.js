@@ -2,7 +2,7 @@ var app = getApp()   //在页面中使用全局变量，要先声明
 import {request} from "../../promise_api/request" 
 Page({
   data: {
-    eject_login_info_switch:false,//控制弹出注册框控制
+    eject_login_info_switch:true,//控制弹出注册框控制
   },
   //登录
   login(nick,sex,tel,add){
@@ -19,12 +19,32 @@ Page({
             method:'post',
             data:{
               code_str:code_str,
-              shop_name:latly_shop
+              shop_name:latly_shop,
+              nicks:nick,
+              sexs:sex,
+              tels:tel,
+              adds:add
+
             },
           })
           .then(res=>{
-            if(res){
+            if(res.data=='R'){
+              console.log('注册情况',res.data)
+              wx.showModal({   //提示弹窗
+                title: '提示',
+                content: '您已经注册过了，不能重复注册',
+              })
+            }else if(res.data=='B'){
+              wx.showModal({   //提示弹窗
+                title: '提示',
+                content: '获取小程序注册id失败，请重试',
+              })
+            }else if (res.data=='S'){
               wx.setStorageSync('Cookie', res)
+              wx.showModal({   //提示弹窗
+                title: '提示',
+                content: '注册成功',
+              })
             }
             
           })
@@ -49,15 +69,30 @@ Page({
   //验证是否登录过
   verification_login_key(){
     var keystr=wx.getStorageSync('Cookie')
+    console.log('keys',keystr.data)
     if(keystr){
+      let keystr=keystr.data
       console.log('keystr',keystr.data)
       //向服务器发请求验证
-
+      request({         //调用封装的request接口
+        url:'select_key',   //用户登际接口
+        method:'post',
+        data:{
+          key:keystr,
+        },
+      })
+      .then(res=>{
+        if(res.data=='N'){
+          this.setData({
+            eject_login_info_switch:false//弹出注册框
+          })
+        }
+      })
     }else{
-      console.log('未登录')
       this.setData({
         eject_login_info_switch:false//弹出注册框
       })
+      
       
     }
     
