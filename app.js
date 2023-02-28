@@ -17,5 +17,9 @@ App({
     userInfo: null, 
     server_ip:"http://192.168.0.108:5000/",   //服务器ip地址
     lately_shopnames:'',
+    login_circuit_changer:'',  //验证登陆节流阀
+    vip_info:[],   //会员信息保存变量
+    shop_car_info:[],    //购物车信息保存变量
+    evaluate_info:[],   //评论信息保存变量
   }, 
 }) 
