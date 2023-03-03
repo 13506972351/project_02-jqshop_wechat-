@@ -3,7 +3,8 @@ import {request} from "../../promise_api/request"
 Page({
   data: {
     eject_login_info_switch:true,//控制弹出注册框控制
-    
+    vip_info:[],    //用户会员信息
+    shop_car_info:[]   //用户购物车信息
   },
   //登录
   login(nick,sex,tel,add){
@@ -92,11 +93,21 @@ Page({
             eject_login_info_switch:false//弹出注册框
           })
         }else{
-          console.log('vip',res.data)
+          // console.log('vip',res.data)
           var res_arry=res.data
-          app.globalData.login_circuit_changer='true'//给全局变量验证登陆节流阀赋值
+          
+          // console.log('ccc',res_arry)
+          app.globalData.login_circuit_changer=true  //给全局变量验证登陆节流阀赋值
           // for(var i=0;i<=res)
-          app.globalData.vip_info=res.data    //将会员信息赋值给全局变量
+          app.globalData.vip_info=res_arry[0]   //将会员信息赋值给全局变量
+          app.globalData.shop_car_info=res_arry[1]
+          // console.log('www',app.globalData.vip_info)
+          this.setData({
+            vip_info:app.globalData.vip_info
+          })
+          this.setData({
+            shop_car_info:app.globalData.shop_car_info
+          })
         }
       })
     }else{
