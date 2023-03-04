@@ -1,13 +1,11 @@
-// pages/shop/shop.js
+
+var app = getApp()   //在页面中使用全局变量，要先声明
+import {request} from "../../promise_api/request" 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     vip_info:[],    //用户会员信息
     shop_car_info:[]   //用户购物车信息
-
   },
   
   //验证是否登录过
@@ -62,7 +60,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    if(!app.globalData.login_circuit_changer){  //如果加载过就不重新加载，否则重新加载
+      this.verification_login_key()//验证是否登录过
+    }
   },
 
   /**

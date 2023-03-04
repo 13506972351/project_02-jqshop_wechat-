@@ -15,7 +15,7 @@ App({
   },
   globalData: {     //定义全局变量
     userInfo: null, 
-    server_ip:"http://192.168.0.105:5000/",   //服务器ip地址
+    server_ip:"http://192.168.109.110:5000/",   //服务器ip地址
     lately_shopnames:'',
     login_circuit_changer:false,  //验证登陆节流阀
     vip_info:[],   //会员信息保存变量

@@ -96,9 +96,9 @@ Page({
           // console.log('vip',res.data)
           var res_arry=res.data
           
-          // console.log('ccc',res_arry)
+          // console.log('ccc',res_arry[1])
           app.globalData.login_circuit_changer=true  //给全局变量验证登陆节流阀赋值
-          // for(var i=0;i<=res)
+        
           app.globalData.vip_info=res_arry[0]   //将会员信息赋值给全局变量
           app.globalData.shop_car_info=res_arry[1]
           // console.log('www',app.globalData.vip_info)

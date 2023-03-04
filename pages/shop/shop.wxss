@@ -21,6 +21,11 @@
   padding: 10rpx 0rpx 10rpx 10rpx;
   height: 80rpx;
 }
+.icon_arrow{
+  position: absolute;
+  /* right: 100rpx; */
+  top: 25rpx;
+}
 .icon_img{
   height: 40rpx;
   width: 40rpx;
@@ -100,4 +105,20 @@ checkbox .wx-checkbox-input{
   color: white;
   font-size: 35rpx;
   line-height: 82rpx;
+}
+.img_style{
+  height: 130rpx;
+  width: 130rpx;
+  border-radius: 10rpx;
+}
+.goods_infos{
+  display: flex;
+  flex-direction: row;
+}
+.text_frame{
+  margin-left: 10rpx;
+}
+.specifications{
+  font-size: 30rpx;
+  color: rgb(129, 127, 127);
 }

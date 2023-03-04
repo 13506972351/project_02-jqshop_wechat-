@@ -2,11 +2,13 @@
   <view class="head_frame">
     <view>
       <label for="" class="text">购物车</label>
-      <label for="" class="count">({{3}})</label>
+      <label for="" class="count">({{shop_car_info.length}})</label>
     </view>
     <view class="address_frame">
       <image src="/image/icon/location.png" mode="" class="icon_img"></image>
-      <label for="" class="address_text">{{299999999999999999988}}</label>
+      <block wx:for="{{vip_info[0]}}" wx:key="index">
+        <label wx:if="{{index==4}}"  for="">{{item}}</label>
+      </block>
       <label for="" class="icon_arrow">></label>
     </view>
     <view class="Administration_frame">
@@ -14,15 +16,31 @@
     </view>
   </view>
   <view class="content_frame">
-    <block>
-      <view class="choice_frame">
-        
-      </view>
-      <view class="img_frame">
-        
-      </view>
-      <view class="content_frame">
-        
+    <block wx:for="{{shop_car_info}}" wx:key="index">
+      <view class="goods_infos">
+        <view class="check_frame">
+          <checkbox class="check_class" value=""/>
+        </view>
+        <view class="img_frame">
+          <image class="img_style" src="{{item[11]}}" mode=""/>
+        </view>
+        <view class="text_frame" >
+          <view class="goods_describe">
+            <label for="">{{item[3]}}</label>
+          </view>
+          <view class="specifications">
+            <label for="">{{item[7]}}#</label>
+            <label for="">{{item[5]}}</label>
+          </view>
+          <view class="count_money">
+            <view class="money">
+              
+            </view>
+            <view class="count">
+              
+            </view>
+          </view>
+        </view>  
       </view>
     </block>
   </view>
