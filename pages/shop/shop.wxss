@@ -14,7 +14,8 @@
 }
 .count{
   font-size: 30rpx;
-  line-height: 70rpx;
+  line-height: 50rpx;
+
 }
 .address_frame{
   width: 460rpx;
@@ -22,9 +23,11 @@
   height: 80rpx;
 }
 .icon_arrow{
-  position: absolute;
-  /* right: 100rpx; */
-  top: 25rpx;
+  line-height: 50rpx;
+}
+.add_texts{
+  font-size: 28rpx;
+  color: #b8b5b5;
 }
 .icon_img{
   height: 40rpx;
@@ -212,3 +215,4 @@ checkbox .wx-checkbox-input{
   font-size: 50rpx;
   line-height: 30rpx;
 }
+

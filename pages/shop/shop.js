@@ -6,8 +6,8 @@ Page({
   data: {
     vip_info:[],    //用户会员信息
     shop_car_info:[],   //用户购物车信息
-    count_show_power:true,  //数量显示开关
-    count_operate_power:false,   //数量操作开关
+    // indexs:-1,     //用于控制第几个物品单元，显示数量操作框
+    total_money:0,
     
   },
   
@@ -37,16 +37,21 @@ Page({
           
           // console.log('ccc',res_arry)
           app.globalData.login_circuit_changer=true  //给全局变量验证登陆节流阀赋值
-          
           app.globalData.vip_info=res_arry[0]   //将会员信息赋值给全局变量
           app.globalData.shop_car_info=res_arry[1]
-          // console.log('www',app.globalData.vip_info)
+          var car_arry=res_arry[1]
+          for(var i=0;i<=car_arry.length-1;i++){
+            car_arry[i].push(false)
+            car_arry[i].push(true)
+          }
+          
           this.setData({
             vip_info:app.globalData.vip_info
           })
           this.setData({
-            shop_car_info:app.globalData.shop_car_info
+            shop_car_info:car_arry
           })
+          
         }
       })
     }else{
@@ -57,8 +62,70 @@ Page({
     }
     
   },
+  //点击数量显示，弹出数量增减操作框
+  show_operatr_count(e){
+    let index_value=e.currentTarget.dataset.indexs
+    // console.log(e.currentTarget.dataset.indexs) 
+    var car_str1="shop_car_info"+"["+index_value+"]"+"["+14+"]"   //拼接data的路径名
+    var car_str2="shop_car_info"+"["+index_value+"]"+"["+15+"]"
+    // console.log(car_str1,car_str2)
+    this.setData({
+      [car_str1]:true,
+      [car_str2]:false
+    })
+  },
+  //点击增加数量
+  add_counts(e){
+    var index=e.currentTarget.dataset.indexs
+    var count=this.data.shop_car_info[index][9]
+    if(count<5){
+      var data_id=e.currentTarget.dataset.id
+      var data_str='shop_car_info'+'['+index+']'+'['+9+']'
+      this.setData({
+        [data_str]:count+1
+      })
+      //发起网络请求，修改数据库中的数量
+      var counts=this.data.shop_car_info[index][9]
+      request({         //调用封装的request接口
+        url:'updata_shop_car',   //用户登际接口
+        method:'post',
+        data:{
+          id:data_id,
+          count:counts
+        },
+      })
+      .then(res=>{
+       // console.log(res.data)
+       })
+    }
+  },
+  //点击减少数量
+  subtract_counts(e){
+    var index=e.currentTarget.dataset.indexs
+    var count=this.data.shop_car_info[index][9]
+    if(count>1){
+      var data_id=e.currentTarget.dataset.id
+      var data_id=e.currentTarget.dataset.id
+      var data_str='shop_car_info'+'['+index+']'+'['+9+']'
 
-  
+      this.setData({
+        [data_str]:count-1
+      })
+      //发起网络请求，修改数据库中的数量
+      var counts=this.data.shop_car_info[index][9]
+      request({         //调用封装的request接口
+        url:'updata_shop_car',   //用户登际接口
+        method:'post',
+        data:{
+          id:data_id,
+          count:counts
+        },
+      })
+      .then(res=>{
+        // console.log(res.data)
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -100,7 +167,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    this.verification_login_key()//验证是否登录过
   },
 
   /**

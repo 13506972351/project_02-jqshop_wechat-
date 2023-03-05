@@ -7,7 +7,7 @@
     <view class="address_frame">
       <image src="/image/icon/location.png" mode="" class="icon_img"></image>
       <block wx:for="{{vip_info[0]}}" wx:key="index">
-        <label wx:if="{{index==4}}"  for="">{{item}}</label>
+        <label wx:if="{{index==4}}"  class="add_texts" for="">{{item}}</label>
       </block>
       <label for="" class="icon_arrow">></label>
     </view>
@@ -16,47 +16,48 @@
     </view>
   </view>
   <view class="content_frame">
-    <block wx:for="{{shop_car_info}}" wx:key="index">
-      <view class="goods_infos">
+    <block wx:for="{{shop_car_info}}" wx:key="index" >
+      <view data-indexs="{{index}}" data-id="{{item[0]}}" class="goods_infos">
         <view class="check_frame">
           <checkbox class="check_class" value=""/>
         </view>
         <view class="img_frame">
-          <image class="img_style" src="{{item[11]}}" mode=""/>
+          <image class="img_style" src="{{item[12]}}" mode=""/>
         </view>
         <view class="text_frame" >
           <view class="goods_describe">
-            <label for="">{{item[3]}}</label>
+            <label for="">{{item[4]}}</label>
           </view>
           <view class="specifications">
-            <label for="">{{item[7]}}#</label>
-            <label for="">{{item[5]}}</label>
+            <label for="">{{item[8]}}#</label>
+            <label for="">{{item[6]}}</label>
           </view>
-          <view class="count_money">
+          <view class="count_money" data-money="{{item[11]}}">
             <view class="money">
               <label for="" class="money_icon">￥</label>
-              <label for="" class="money_value">{{item[10]}}</label>
+              <label for="" class="money_value">{{item[11]}}</label>
             </view>
             
           </view>
           <view>
             <image class="shop_icon" src="/image/icon/shop.png" mode=""/>
-            <label class="shop_name" for="">{{item[2]}}</label>
+            <label class="shop_name" for="">{{item[3]}}</label>
           </view>
         </view>  
         <view class="count_frame">
-          <view class="show_count"  hidden="{{count_show_power}}">
+          <view class="show_count" data-indexs="{{index}}" data-id="{{item[0]}}"  bindtap="show_operatr_count" hidden="{{item[14]}}">
             <label for="">×</label>
-            <label for="">1</label>
+            <label for="">{{item[9]}}</label>
           </view> 
-          <view class="operate_count" hidden="{{count_operate_power}}">
-            <view class="subtract_frame">
-              <label class="subtract_char" for="">-</label>
+          <view class="operate_count" data-indexs="{{index}}" data-id="{{item[0]}}"        
+           hidden="{{item[15]}}">
+            <view class="subtract_frame" data-indexs="{{index}}" data-id="{{item[0]}}" bindtap="subtract_counts">
+              <label   class="subtract_char" for="">-</label>
             </view>
             <view class="counts_frame">
-              <label class="count_values" for="">{{item[8]}}</label>
+              <label class="count_values"  data-name="{{index}}" data-id="{{item[0]}}" for="">{{item[9]}}</label>
             </view>
-            <view class="add_frame">
+            <view class="add_frame"  data-indexs="{{index}}" data-id="{{item[0]}}  " bindtap="add_counts">
               <label class="add_char" for="">+</label>
             </view>
             
@@ -76,12 +77,13 @@
     <view class="count_text2">
       <label for="">合计：</label>
       <label for="" class="money_icon">￥</label>
-      <label for="" class="money">{{3.00}}</label>
+      <label for="" class="money">{{total_money}}</label>
     </view>
     <view class="button">
       <view class="settlement_button">去结算</view>
     </view>
   </view>
+  
 </view>
 
 
