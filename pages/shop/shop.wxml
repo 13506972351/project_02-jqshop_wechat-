@@ -34,14 +34,36 @@
           </view>
           <view class="count_money">
             <view class="money">
-              
+              <label for="" class="money_icon">￥</label>
+              <label for="" class="money_value">{{item[10]}}</label>
             </view>
-            <view class="count">
-              
-            </view>
+            
+          </view>
+          <view>
+            <image class="shop_icon" src="/image/icon/shop.png" mode=""/>
+            <label class="shop_name" for="">{{item[2]}}</label>
           </view>
         </view>  
+        <view class="count_frame">
+          <view class="show_count"  hidden="{{count_show_power}}">
+            <label for="">×</label>
+            <label for="">1</label>
+          </view> 
+          <view class="operate_count" hidden="{{count_operate_power}}">
+            <view class="subtract_frame">
+              <label class="subtract_char" for="">-</label>
+            </view>
+            <view class="counts_frame">
+              <label class="count_values" for="">{{item[8]}}</label>
+            </view>
+            <view class="add_frame">
+              <label class="add_char" for="">+</label>
+            </view>
+            
+          </view>      
+        </view>
       </view>
+      
     </block>
   </view>
   <view class="button_frame">

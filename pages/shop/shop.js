@@ -5,7 +5,10 @@ Page({
 
   data: {
     vip_info:[],    //用户会员信息
-    shop_car_info:[]   //用户购物车信息
+    shop_car_info:[],   //用户购物车信息
+    count_show_power:true,  //数量显示开关
+    count_operate_power:false,   //数量操作开关
+    
   },
   
   //验证是否登录过

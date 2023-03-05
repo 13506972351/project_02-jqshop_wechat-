@@ -82,7 +82,7 @@ checkbox .wx-checkbox-input{
 } */
 .count_text2{
   line-height: 45rpx;
-  padding: 20rpx 0 20rpx 125rpx;
+  padding: 20rpx 0 20rpx 80rpx;
 }
 .money_icon{
   font-size: 20rpx;
@@ -106,19 +106,109 @@ checkbox .wx-checkbox-input{
   font-size: 35rpx;
   line-height: 82rpx;
 }
+.content_frame{
+  background-color: #fdfbfb;
+  height: 100%;
+  padding-top: 5rpx;
+  line-height: 100%;
+}
 .img_style{
   height: 130rpx;
   width: 130rpx;
   border-radius: 10rpx;
+  line-height: 100%;
+  padding: 10rpx;
 }
 .goods_infos{
   display: flex;
   flex-direction: row;
+  margin: 20rpx;
+  background-color: rgb(226, 221, 221);
+  border-radius: 10rpx;
+  position: relative;
+}
+.goods_describe{
+  font-size: 28rpx;
+  
 }
 .text_frame{
   margin-left: 10rpx;
+  padding: 10rpx;
 }
 .specifications{
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: rgb(129, 127, 127);
+  padding-top: 5rpx;
+}
+.check_frame{
+  padding: 10rpx;
+  
+}
+.check_class{
+  line-height: 333%;
+}
+.shop_name{
+  font-size: 28rpx;
+  color: rgb(151, 150, 150);
+}
+.money_icon,.money_value{
+  color: red;
+  font-size: 25rpx;
+}
+.money{
+  padding: 5rpx 0 5rpx 0;
+}
+.shop_icon{
+  width: 25rpx;
+  height: 25rpx;
+}
+.count_frame{
+  position:absolute;
+  right: 30rpx;
+  bottom: 100rpx;
+  
+}
+.show_count{
+  border: 1rpx solid #b8b5b5;
+  border-radius: 10rpx;
+  width: 45rpx;
+  height: 45rpx;
+  line-height: 40rpx;
+}
+.operate_count{
+
+  display: flex;
+  flex-direction: row;
+  
+}
+.add_frame{
+  height: 45rpx;
+  width: 45rpx;
+  border: 1rpx solid #b8b5b5;
+  border-top-right-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+  text-align: center;
+}
+.subtract_frame{
+  height: 45rpx;
+  width: 45rpx;
+  border: 1rpx solid #b8b5b5;
+  border-top-left-radius: 10rpx;
+  border-bottom-left-radius: 10rpx;
+  text-align: center;
+}
+.counts_frame{
+  height: 45rpx;
+  width: 70rpx;
+  border: 1rpx solid #b8b5b5;
+  text-align: center;
+  line-height: 40rpx;
+}
+.subtract_char{
+  font-size: 70rpx;
+  line-height: 30rpx;
+}
+.add_char{
+  font-size: 50rpx;
+  line-height: 30rpx;
 }
